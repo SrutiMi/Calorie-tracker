@@ -2,10 +2,30 @@ import React from 'react';
 import './App.css';
 
 function App() {
-  return(
+   const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const form = event.target;
+    const formData = new FormData(form);
+
+    fetch('../../backend/index.php', {
+      method: 'POST',
+      body: formData,
+    })
+      .then((response) => response.text())
+      .then((data) => {
+        console.log(data); // Handle the response from the PHP script
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+    return(
     <div className="app">
        <h2>Calorie-tracker</h2>
-       <form action="submit" method="post">
+             <form onSubmit={handleSubmit}>
+
+        {/* <form action="../backend/index.php" method ="post"> */}
            <label for="name">Name</label>
            <input type="text" name="name" required/>
            <br />
